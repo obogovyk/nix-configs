@@ -1,11 +1,8 @@
 # Example config file /etc/vsftpd/vsftpd.conf
 
-# Allow anonymous FTP? (Beware - allowed by default if you comment this out).
 anonymous_enable=NO
-
 local_enable=YES
 
-# Uncomment this to enable any form of FTP write command.
 write_enable=YES
 
 local_umask=022
@@ -13,43 +10,42 @@ anon_mkdir_write_enable=NO
 
 dirmessage_enable=YES
 
-# Activate logging of uploads/downloads.
-
+#Activate logging
 #xferlog_file=/var/log/xferlog
 #xferlog_std_format=NO
+
 xferlog_enable=YES
 log_ftp_protocol=YES
 vsftpd_log_file=/var/log/vsftpd.log
 xferlog_std_format=NO
 
-# Make sure PORT transfer connections originate from port 20 (ftp-data).
 connect_from_port_20=YES
 
-# Passive mode configuration (optional)
-pasv_enable=YES
-pasv_min_port=1024
-pasv_max_port=1048
-pasv_address=52.4.29.60
+#Passive mode configuration (optional)
+#pasv_enable=YES
+#pasv_min_port=1024
+#pasv_max_port=1048
+#pasv_address=52.4.29.60
 
-# You may change the default value for timing out an idle session.
+#You may change the default value for timing out an idle session.
 #idle_session_timeout=600
 
-# You may change the default value for timing out a data connection.
+#You may change the default value for timing out a data connection.
 #data_connection_timeout=120
 
-# ASCII mangling is a horrible feature of the protocol.
+#ASCII mangling is a horrible feature of the protocol.
 #ascii_upload_enable=YES
 #ascii_download_enable=YES
 
 ftpd_banner=Welcome to AWS FTP-server. All activities are logged.
 #banned_email_file=/etc/vsftpd/banned_emails
 
-# You may specify an explicit list of local users to chroot() to their home
-# directory. If chroot_local_user is YES, then this list becomes a list of
-# users to NOT chroot().
-# (Warning! chroot'ing can be very dangerous. If using chroot, make sure that
-# the user does not have write access to the top level directory within the
-# chroot)
+#You may specify an explicit list of local users to chroot() to their home
+#directory. If chroot_local_user is YES, then this list becomes a list of
+#users to NOT chroot().
+#(Warning! chroot'ing can be very dangerous. If using chroot, make sure that
+#the user does not have write access to the top level directory within the
+#chroot)
 
 chroot_local_user=YES
 allow_writeable_chroot=YES
