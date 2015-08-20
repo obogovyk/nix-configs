@@ -68,13 +68,12 @@ tcp_wrappers=YES
 #rsa_private_key_file=/etc/vsftpd/vsftpd.pem
 
 #ssl_enable=YES
-#allow_anon_ssl=NO
-#force_local_data_ssl=NO
-#force_local_logins_ssl=YES
-
-#ssl_tlsv1=YES
 #ssl_sslv2=NO
 #ssl_sslv3=YES
-
+#ssl_tlsv1=YES
 #require_ssl_reuse=NO
 #ssl_ciphers=HIGH
+#allow_anon_ssl=NO
+
+#force_local_data_ssl=NO
+#force_local_logins_ssl=YES
