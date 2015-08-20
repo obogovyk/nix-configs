@@ -12,9 +12,6 @@ dirlist_enable = YES
 dirmessage_enable=YES
 
 # Activate logging
-#xferlog_file=/var/log/xferlog
-#xferlog_std_format=NO
-
 xferlog_enable=YES
 xferlog_std_format=NO
 log_ftp_protocol=YES
