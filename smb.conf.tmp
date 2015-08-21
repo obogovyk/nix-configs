@@ -261,6 +261,7 @@
   browsable = no
   writable = yes
   guest ok = no
+  hosts allow = 192.168.1. EXCEPT 192.168.1.254
 
 [marketing-QA]
 	comment = QA Directories
