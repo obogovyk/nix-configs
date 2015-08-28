@@ -4,53 +4,8 @@ option domain-name-servers 192.168.1.5, 192.168.1.6;
 option routers 192.168.1.250;
 option subnet-mask 255.255.255.0;
 option broadcast-address 192.168.2.255;
-option time-offset -18000; # Eastern Standard Time
+option time-offset -18000;
 
-### primary failover
-#failover peer "dhcp-failover" {
-#    primary;
-#    address dhcp-primary.example.com;
-#    port 519; #slave 520
-#    peer address dhcp.example.com;
-#    peer port 520;
-#    max‐response‐delay 60;
-#    max‐unacked‐updates 10;
-#    mclt 3600;
-#    split 128;
-#    load balance max seconds 3;
-#}
-
-### secondary failover
-#failover peer "dhcp-failover" {
-#      secondary;
-#      address dhcp.example.com;
-#      port 520;
-#      peer address dhcp.example.com;
-#      peer port 519;
-#      max‐response‐delay 60;
-#      max‐unacked‐updates 10;
-#      load balance max seconds 3;
-#}
-
-## http://webcache.googleusercontent.com/search?q=cache:tbaPhUwlbdsJ:consultancy.edvoncken.net/index.php/HOWTO_Configure_DHCP_failover+&cd=1&hl=en&ct=clnk&gl=us
-
-# Unknown clients get this pool
-  pool {
-    failover peer "dhcp-failover";
-    max-lease-time 300;
-    range 10.0.0.240 10.0.0.249;
-    allow unknown-clients;
-  }
-
-  # Known clients get this pool
-  pool {
-    failover peer "dhcp-failover";
-    max-lease-time 28800;
-    range 10.0.0.150 10.0.0.199;
-    deny unknown-clients;
-  }
-
-# ddns-update-style none;
 authoritative;
 log-facility local7;
 
