@@ -32,7 +32,7 @@ option time-offset -18000; # Eastern Standard Time
 #      load balance max seconds 3;
 #}
 
----
+## http://webcache.googleusercontent.com/search?q=cache:tbaPhUwlbdsJ:consultancy.edvoncken.net/index.php/HOWTO_Configure_DHCP_failover+&cd=1&hl=en&ct=clnk&gl=us
 
 # Unknown clients get this pool
   pool {
