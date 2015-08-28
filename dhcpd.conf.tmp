@@ -1,0 +1,20 @@
+option domain-name "example.com";
+option domain-search "example.com";
+option domain-name-servers 192.168.1.5, 192.168.1.6;
+option routers 192.168.1.250;
+option subnet-mask 255.255.255.0;
+option broadcast-address 192.168.2.255;
+option time-offset -18000; # Eastern Standard Time
+
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.20 192.168.1.249;
+  default-lease-time 10800;
+  max-lease-time 28800; # 3600x8h=28800s.
+}
+
+host user1 {
+  option host-name “user1.example.com”;
+  hardware ethernet 80:56:3e:XX:XX:XX;
+  fixed-address 192.168.1.50;
+  max-lease-time 32400; # 9h.
+}
