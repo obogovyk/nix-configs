@@ -1,0 +1,15 @@
+$TTL 86400
+@         IN  SOA  ns0.xxx-spa.com.ua.  admin.xxx-spa.com.ua. (
+          2015082705  ; serial
+          6H          ; refresh after 6 hours
+          1H          ; retry after 1 hour
+          1W          ; expire after 1 week
+          1D )        ; minimum TTL of 1 day
+;
+    IN    A      52.4.xx.xx
+    IN    NS     ns0.xxx-spa.com.ua.
+@   IN    MX 10  mail.xxx-spa.com.ua.
+;
+;
+ns0	IN	A	172.31.5.xxx
+mail	IN	A	172.31.5.xxx
