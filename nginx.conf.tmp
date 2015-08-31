@@ -1,3 +1,14 @@
+user nginx;
+worker_processes  auto;
+error_log  /var/log/nginx/error.log;
+pid        /run/nginx.pid;
+
+events {
+    use epoll;
+    worker_connections 1024;
+    multi_accept on;
+}
+
 server {
     listen 80;
     server_name  opensoft.local www.opensoft.local;
@@ -13,6 +24,7 @@ server {
 
     charset utf-8;
     client_max_body_size 1m;
+    client_body_timeout 10;
 
     keepalive_timeout  75 60;
 
@@ -20,7 +32,7 @@ server {
     error_log /var/log/nginx/opensoft/os.error.log;
 
     gzip            on;
-    gzip_comp_level 3;
+    gzip_comp_level 4;
     gzip_min_length 1024;
     gzip_proxied    expired no-cache no-store private auth;
     gzip_types      text/plain application/x-javascript text/javascript text/css text/json;
@@ -31,7 +43,7 @@ server {
             index index.php index.html index.htm;
     }
 
-    location ^~ /public-rpm/ {
+    location ^~ /public-rpm {
         autoindex on;
         autoindex_format html;
 
@@ -39,14 +51,14 @@ server {
         limit_rate 512k;
     }
 
-    location /admin/ {
+    location /admin {
         allow 10.0.0.24/32;
         deny all;
         auth_basic "Authentication required.";
         auth_basic_user_file conf/.htpasswd;
     }
     
-    location /proxy {
+    location /proxied {
         proxy_pass       http://127.0.0.1:8080;
         proxy_set_header X-Real-IP  $remote_addr;
         proxy_set_header X-Forwarded-For $remote_addr;
