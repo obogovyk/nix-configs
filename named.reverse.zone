@@ -1,0 +1,17 @@
+# Name: db.x.xx.172-XX-spa.com.XX
+
+$ORIGIN X.XX.172.in-addr.arpa.
+$TTL    1D
+;
+@       IN  SOA  ns0.XX-spa.XX.ua.  admin.XX-spa.XX.ua. (
+        2015090204  ; serial
+        6H          ; refresh after 6 hours
+        1H          ; retry after 1 hour
+        1W          ; expire after 1 week
+        1D )        ; minimum TTL of 1 day
+;
+   IN   NS     ns0.XX-spa.XX.ua.
+   IN   MX 10  mail.XX-spa.XX.ua.
+;
+103     IN     PTR     ns0.XX-spa.XX.ua.
+103     IN     PTR     mail.XX-spa.XX.ua.
