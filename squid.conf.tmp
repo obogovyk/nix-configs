@@ -1,9 +1,10 @@
-http_port 3128
+http_port         10.0.0.1:3128
+visible_hostname  admin@opennet.com.ua
 
-refresh_pattern ^ftp:           1440    20%     10080
-refresh_pattern ^gopher:        1440    0%      1440
-refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
-refresh_pattern .               0       20%     4320
+refresh_pattern ^ftp:             1440    20%     10080
+refresh_pattern ^gopher:          1440    0%      1440
+refresh_pattern -i (/cgi-bin/|\?) 0       0%      0
+refresh_pattern .                 0       20%     4320
 
 acl localnet src 10.0.0.0/8     # RFC 1918 possible internal network
 acl localnet src 172.16.0.0/12  # RFC 1918 possible internal network
@@ -12,7 +13,6 @@ acl localnet src fc00::/7       # RFC 4193 local private network range
 acl localnet src fe80::/10      # RFC 4291 link-local (directly plugged) machines
 
 acl SSL_ports port 443
-
 acl Safe_ports port 80          # http
 acl Safe_ports port 21          # ftp
 acl Safe_ports port 443         # https
@@ -25,6 +25,14 @@ acl Safe_ports port 591         # filemaker
 acl Safe_ports port 777         # multiling http
 acl CONNECT method CONNECT
 
+# Custom ACL
+acl top_users src "/etc/squid/rules/top_users.acl"
+acl all_users src "/etc/squid/rules/all_users.acl"
+acl banned dstdomain "/etc/squid/rules/banned.acl"
+acl connlimit maxconn 25
+acl daytime time MTWHF 08:00-21:00
+acl multimedia urlpath_regex \.mp3$ \.mp4$ \.flv$ \.mov$ \.mpeg$ \.avi$
+
 http_access allow manager localhost
 http_access deny manager
 http_access deny !Safe_ports
@@ -32,3 +40,44 @@ http_access deny CONNECT !SSL_ports
 http_access allow localhost
 http_access allow localnet
 http_access deny all
+
+# Cache
+cache_mem 1024 MB
+maximum_object_size_in_memory 512 KB
+cache_dir ufs /var/spool/squid 8192 16 256
+
+minimum_object_size 0 KB
+maximum_object_size 16 MB
+
+cache deny multimedia
+
+# Logs
+access_log /var/log/squid/access.log squid
+cache_log /var/log/squid/cache.log
+
+# Deny to download large files for all users.
+reply_body_max_size 100 MB all_users
+
+# The maximum amount of time a client (browser).
+client_lifetime 1 day
+
+# Timeout/Clients
+connect_timeout 1 minute
+half_closed_clients off
+
+#dns_nameservers 	192.168.7.1 8.8.8.8
+#unique_hostname	proxy.opennet.com.ua
+
+# Delay Pools/Rules
+delay_pools 1
+
+delay_class 1 1
+delay_class 1 2
+
+delay_access 1 allow all_users
+delay_access 1 deny all
+delay_access 2 allow top_users
+delay_access 2 deny all
+
+delay_parameters 1 64000/64000 		# 512 kbits, 64 kbytes per second
+delay_parameters 2 128000/128000	# 1024 kbits (1 Mbit), 64 kbytes per second
