@@ -72,7 +72,7 @@ half_closed_clients off
 delay_pools 1
 
 delay_class 1 1
-delay_class 1 2
+delay_class 2 1
 
 delay_access 1 allow all_users
 delay_access 1 deny all
