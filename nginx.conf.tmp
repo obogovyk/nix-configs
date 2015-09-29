@@ -11,7 +11,7 @@ events {
 
 server {
     listen 80;
-    # listen 443 default ssl;
+    # listen 443 default_server ssl;
     server_name opensoft.local www.opensoft.local;
     
     #if ($scheme = http) {
