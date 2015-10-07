@@ -12,7 +12,8 @@ events {
 http {
     ## Load balancing NGINX
     #upstream myapp-balance {
-    #    server srv1.example.com;
+    #    ip_hash;
+    #    server srv1.example.com weight=2;
     #    server srv2.example.com;
     #    server srv3.example.com;
     #}
