@@ -1,39 +1,26 @@
+# Testet on CentOS x86 6.7 (Final)
+
 [mysqld]
-
-datadir=/var/lib/mysql
+# bind-address=192.168.122.49
+port=3306
 user=mysql
-
-# Path to Galera library
-wsrep_provider=/usr/lib64/libgalera_smm.so
-
-# Cluster connection URL contains the IPs of node#1, node#2 and node#3
-wsrep_cluster_address=gcomm://192.168.1.10,192.168.1.11,192.168.1.12
-
-# In order for Galera to work correctly binlog format should be ROW
+datadir = /var/lib/mysql
+wsrep_provider=/usr/lib/libgalera_smm.so
+wsrep_cluster_address = gcomm://192.168.122.48,192.168.122.49,192.168.122.50
 binlog_format=ROW
-
-# MyISAM storage engine has only experimental support
 default_storage_engine=InnoDB
-
-# This changes how InnoDB autoincrement locks are managed and is a requirement for Galera
 innodb_autoinc_lock_mode=2
+wsrep_node_address=192.168.122.49
+# wsrep_sst_method=xtrabackup-v2
+wsrep_cluster_name=PXC
+wsrep_sst_auth="sstuser:58Ag$yT1*"
 
-# Node #1 address
-wsrep_node_address=192.168.1.10
+## Initialization
+# /etc/init.d/mysql bootstrap-pxc
+# systemctl start mysql@bootstrap.service
 
-# SST method
-wsrep_sst_method=xtrabackup-v2
-
-# Cluster name
-wsrep_cluster_name=CentOS7Cluster
-
-# Authentication for SST method
-wsrep_sst_auth="sstuser:1521687Zeri$%"
-
-## /etc/init.d/mysql bootstrap-pxc
-## systemctl start mysql@bootstrap.service
-
-## mysql@percona1> UPDATE mysql.user SET password=PASSWORD("Passw0rd") where user='root';
-## mysql@percona1> FLUSH PRIVILEGES;
+## Add user for relication
+# mysql@percona1> UPDATE mysql.user SET password=PASSWORD("Passw0rd") where user='root';
+# mysql@percona1> FLUSH PRIVILEGES;
 
 ## mysql> show status like 'wsrep%';
