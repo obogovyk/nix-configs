@@ -1,3 +1,5 @@
+## Tested on CentOS 6.7 (Final)
+
 mysql> create database dbtest;
 
 PREPARE (Write Data)
@@ -17,3 +19,30 @@ sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-table-engine=i
 CLEAN UP
 sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-db=dbtest --mysql-user=root --mysql-password=*** 
 --mysql-socket=/var/lib/mysql/mysql.sock cleanup
+
+Example output:
+OLTP test statistics:
+    queries performed:
+        read:                            2758
+        write:                           788
+        other:                           394
+        total:                           3940
+    transactions:                        197    (6.39 per sec.)
+    read/write requests:                 3546   (115.05 per sec.)
+    other operations:                    394    (12.78 per sec.)
+    ignored errors:                      0      (0.00 per sec.)
+    reconnects:                          0      (0.00 per sec.)
+
+General statistics:
+    total time:                          30.8210s
+    total number of events:              197
+    total time taken by event execution: 243.6213s
+    response time:
+         min:                                146.52ms
+         avg:                               1236.66ms
+         max:                               2510.31ms
+         approx.  95 percentile:            1811.52ms
+
+Threads fairness:
+    events (avg/stddev):           24.6250/0.48
+    execution time (avg/stddev):   30.4527/0.27
