@@ -12,6 +12,11 @@ sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-table-engine=i
 --oltp-test-mode=simple --oltp-table-size=120000 --mysql-db=dbtest --mysql-user=root --mysql-password=*** 
 --mysql-socket=/var/lib/mysql/mysql.sock run
 
+# READ TEST
+# for each in 1 4 8 16 32 64; do sysbench --test=oltp --db-driver=mysql --oltp-table-size=10000000 
+# --mysql-db=sysbench --mysql-user=sysbench --mysql-password=password --max-time=240 --oltp-read-only=on 
+# --max-requests=0 --num-threads=$each run; sleep 10; done
+
 COMPLEX TEST
 sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-table-engine=innodb --num-threads=8 --max-time=30 
 --oltp-test-mode=complex --oltp-table-size=120000 --mysql-db=dbtest --mysql-user=root --mysql-password=*** 
