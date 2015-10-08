@@ -1,0 +1,13 @@
+mysql> create database dbtest;
+
+PREPARE (Write Data)
+sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-table-engine=innodb --oltp-table-size=120000 --mysql-db=dbtest --mysql-user=root --mysql-password=*** --mysql-socket=/var/lib/mysql/mysql.sock prepare
+
+SIMPLE TEST
+sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-table-engine=innodb --num-threads=8 --max-time=30 --oltp-test-mode=simple --oltp-table-size=120000 --mysql-db=dbtest --mysql-user=root --mysql-password=*** --mysql-socket=/var/lib/mysql/mysql.sock run
+
+COMPLEX TEST
+sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-table-engine=innodb --num-threads=8 --max-time=30 --oltp-test-mode=complex --oltp-table-size=120000 --mysql-db=dbtest --mysql-user=root --mysql-password=*** --mysql-socket=/var/lib/mysql/mysql.sock run
+
+CLEAN UP
+sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --mysql-db=dbtest --mysql-user=root --mysql-password=*** --mysql-socket=/var/lib/mysql/mysql.sock cleanup
