@@ -37,6 +37,11 @@ server {
 
     root         /usr/share/nginx/html/opensoft;
 
+    location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|zip|tgz|gz|rar|bz2|pdf|tar|doc|xls|ppt|txt)$ {
+        expires 7d;
+        access_log off;
+    }
+    
     location / {
             index index.php index.html index.htm;
     }
