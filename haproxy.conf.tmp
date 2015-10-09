@@ -1,0 +1,63 @@
+global
+    log         127.0.0.1 local2
+
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     2048
+    user        haproxy
+    group       haproxy
+    daemon
+
+    stats socket /var/lib/haproxy/stats
+
+    # Default SSL material locations
+    #ca-base /etc/ssl/certs
+    #crt-base /etc/ssl/private
+
+defaults
+    mode                    http # or tcp
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 2000
+
+frontend main
+    bind 192.168.122.1:80
+    # acl url_static       path_beg       -i /static /images /javascript /stylesheets
+    # acl url_static       path_end       -i .jpg .gif .png .css .js
+
+    #use_backend static          if url_static
+    default_backend             app
+
+# Possible config for CDN round-robin
+#backend static
+#    balance     roundrobin
+#    server  app1 192.168.122.48:80 weight 1 maxconn 1024 cookie 1 check
+#    server  app2 192.168.122.49:80 weight 1 maxconn 1024 cookie 1 check
+
+backend app
+    balance roundrobin # roundrobin/static-rr/leastconn/uri/hdr
+    server  app1 192.168.122.48:80 weight 1 maxconn 1024 cookie 1 check
+    server  app2 192.168.122.49:80 weight 1 maxconn 1024 cookie 1 check
+    
+# === MySQL (Percona) LoadBalancing example ===
+#listen mysql-cluster 0.0.0.0:3306
+  #  mode tcp
+  #  balance roundrobin
+  #  option mysql-check user root
+
+  #  server db01 10.4.29.100:3306 check
+  #  server db02 10.4.29.99:3306 check
+  #  server db03 10.4.29.98:3306 check
+  
