@@ -22,14 +22,15 @@ max_connections=200
 #thread_cache_size=15
 
 # Logs
-general_log_file = /var/log/mysql/mysql.log
-general_log = 1
+general_log_file=/var/log/mysql/mysql.log
+general_log=1
 
 log-error=/var/log/mysql-error.log
 log_warnings=1
 
-slow_query_log = /var/log/mysql/mysql-slow.log
-long_query_time = 10
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow.log
+long_query_time = 5
 log-queries-not-using-indexes
 
 # InnoDB
