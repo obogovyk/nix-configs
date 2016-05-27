@@ -26,7 +26,7 @@ sysbench --test=oltp --db-driver=mysql --mysql-table-engine=innodb --oltp-table-
 # --mysql-db=sysbench --mysql-user=sysbench --mysql-password=password --max-time=240 --oltp-read-only=on 
 # --max-requests=0 --num-threads=$each run; sleep 10; done
 
---- Example output: ---
+--- Example output (difference between SATA and SSD): ---
 SATAII test:
 OLTP test statistics:
     queries performed:
@@ -38,7 +38,7 @@ OLTP test statistics:
     read/write requests:                 3546   (115.05 per sec.)
     other operations:                    394    (12.78 per sec.)
 
-SSD Amazon test:
+SSD Amazon t2.micro instance test:
 OLTP test statistics:
     queries performed:
         read:                            140462
