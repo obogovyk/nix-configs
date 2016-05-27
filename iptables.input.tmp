@@ -14,5 +14,5 @@
 -A INPUT -i eth0 -j REJECT --reject-with icmp-host-prohibited
 ---
 # BLACKLIST EXAMPLE
--A BLACKLIST -s 218.27.xx.xxx/32 -i eth0 -p tcp -m tcp --dport 22 -j REJECT --reject-with icmp-host-prohibited
+-A BLACKLIST -s 218.xx.xx.xxx/32 -i eth0 -p tcp -m tcp --dport 22 -j REJECT --reject-with icmp-host-prohibited
 -A BLACKLIST -j RETURN
