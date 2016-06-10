@@ -61,7 +61,7 @@
 
 [global]
 
-	workgroup = OPENSOFT
+	workgroup = EXAMPLE
 	server string = Samba Server Version %v
 	netbios name = opensoft.local
 
