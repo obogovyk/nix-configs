@@ -1,23 +1,27 @@
-option domain-name "example.com";
+# dhcpd.conf
+# Sample configuration file for ISC dhcpd
+
 option domain-search "example.com";
-option domain-name-servers 192.168.1.5, 192.168.1.6;
-option routers 192.168.1.250;
-option subnet-mask 255.255.255.0;
-option broadcast-address 192.168.2.255;
+option domain-name-servers ns1.int.example.com, 8.8.8.8;
+default-lease-time 600;
+max-lease-time 7200;
+ddns-update-style none;
 option time-offset -18000;
 
 authoritative;
 log-facility local7;
 
 subnet 192.168.1.0 netmask 255.255.255.0 {
-  range 192.168.1.20 192.168.1.249;
-  default-lease-time 10800;
-  max-lease-time 28800; # 3600((s) in 1hr)x8(h)=28800(s)
+  range 192.168.1.10 192.168.1.100;
+  option routers 192.168.1.1;
+  option broadcast-address 192.168.1.255;
+  default-lease-time 1200;
+  max-lease-time 28800; # 8h.
 }
 
-host user1 {
-  option host-name “user1.example.com”;
-  hardware ethernet 80:56:3e:XX:XX:XX;
-  fixed-address 192.168.1.50;
+host gordienko {
+  option host-name "user1.example.com";
+  hardware ethernet 08:00:07:26:c0:a5;
+  fixed-address 192.168.1.10;
   max-lease-time 32400; # 9h.
 }
