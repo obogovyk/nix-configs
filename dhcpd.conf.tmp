@@ -25,3 +25,6 @@ host user1 {
   fixed-address 192.168.1.10;
   max-lease-time 32400; # 9h.
 }
+
+# declare hosts or include separate file
+# include "/etc/dhcp/users.conf";
