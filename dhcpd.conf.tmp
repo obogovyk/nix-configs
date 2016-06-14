@@ -27,4 +27,4 @@ host user1 {
 }
 
 # declare hosts or include separate file
-# include "/etc/dhcp/users.conf";
+# include "/etc/dhcp/dhcpd.conf.users";
