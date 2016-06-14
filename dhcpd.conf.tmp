@@ -1,15 +1,16 @@
 # dhcpd.conf
 # Sample configuration file for ISC dhcpd
 
+authoritative;
+log-facility local7;
+server-identifier ubuntusv;
+
 option domain-search "example.com";
 option domain-name-servers ns1.int.example.com, 8.8.8.8;
 default-lease-time 600;
 max-lease-time 7200;
 ddns-update-style none;
 option time-offset -18000;
-
-authoritative;
-log-facility local7;
 
 subnet 192.168.1.0 netmask 255.255.255.0 {
   range 192.168.1.10 192.168.1.100;
