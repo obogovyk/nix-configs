@@ -19,7 +19,7 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
   max-lease-time 28800; # 8h.
 }
 
-host gordienko {
+host user1 {
   option host-name "user1.example.com";
   hardware ethernet 08:00:07:26:c0:a5;
   fixed-address 192.168.1.10;
