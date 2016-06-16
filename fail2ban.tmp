@@ -11,3 +11,30 @@ banaction = iptables-multiport
 protocol = tcp
 
 chain = INPUT
+
+# JAILS
+
+[ssh]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log # /var/log/audit.log - CentOS
+maxretry = 6
+
+[nginx-http-auth]
+enabled = true
+filter  = nginx-http-auth
+port    = http,https
+logpath = /var/log/nginx/error.log
+
+[sasl]
+enabled  = true
+port     = smtp,ssmtp,submission,imap2,imap3,imaps,pop3,pop3s
+filter   = postfix-sasl
+logpath  = /var/log/mail.log
+
+[mysqld-auth]
+enabled  = true
+filter   = mysqld-auth
+port     = 3306
+logpath  = /var/log/mysql/error.log
