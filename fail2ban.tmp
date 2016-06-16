@@ -12,7 +12,7 @@ protocol = tcp
 
 chain = INPUT
 
-# JAILS
+### JAILS
 
 [ssh]
 enabled  = true
