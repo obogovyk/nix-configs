@@ -1,1 +1,13 @@
 ignoreip = 127.0.0.1/8
+
+bantime = 3600
+findtime = 1800
+maxretry = 3
+
+backend = auto
+usedns = warn
+
+banaction = iptables-multiport
+protocol = tcp
+
+chain = INPUT
