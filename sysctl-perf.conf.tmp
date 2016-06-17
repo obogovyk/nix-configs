@@ -40,7 +40,7 @@ vm.dirty_ratio = 20
 vm.dirty_background_ratio = 10
 
 # Specifies the minimum virtual address that a process is allowed to mmap
-vm.mmap_min_addr = 4096
+vm.mmap_min_addr = 65536
 
 # 50% overcommitment of available memory
 vm.overcommit_ratio = 50
@@ -79,6 +79,14 @@ net.ipv4.conf.all.accept_source_route = 0
 net.ipv4.conf.default.accept_source_route = 0
 net.ipv6.conf.all.accept_source_route = 0
 net.ipv6.conf.default.accept_source_route = 0
+
+# Enable IP spoofing protection, turn on source route verification
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+
+# Enable Log Spoofed Packets, Source Routed Packets, Redirect Packets
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.conf.default.log_martians = 1
 
 # Decrease the time default value for tcp_fin_timeout connection
 net.ipv4.tcp_fin_timeout = 30
