@@ -14,6 +14,9 @@ kernel.msgmax = 65535
 # Restrict core dumps
 fs.suid_dumpable = 2
 
+# Hide exposed kernel pointers
+kernel.kptr_restrict = 1
+
 #
 ### MEMORY
 #
