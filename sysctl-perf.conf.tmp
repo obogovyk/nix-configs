@@ -14,7 +14,7 @@ fs.suid_dumpable = 2
 
 ### MEMORY ###
 
-# Instructs the kernel to call oom_killer
+# Configure oom_killer
 vm.panic_on_oom = 0
 vm.overcommit_memory = 0
 vm.overcommit_ratio = 50
