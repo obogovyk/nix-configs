@@ -27,8 +27,6 @@ fs.protected_symlinks = 1
 
 # Configure OOM killer
 vm.panic_on_oom = 0
-vm.overcommit_memory = 0
-vm.overcommit_ratio = 50
 
 # Increase size of file handles and inode cache
 fs.file-max = 655350
