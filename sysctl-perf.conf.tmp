@@ -1,4 +1,4 @@
-### GENERAL
+### GENERAL ###
 
 # Allow more PIDs
 kernel.pid_max = 65535
@@ -12,7 +12,7 @@ kernel.msgmax = 65535
 # Restrict core dumps
 fs.suid_dumpable = 2
 
-### MEMORY
+### MEMORY ###
 
 # Instructs the kernel to call oom_killer
 vm.panic_on_oom = 0
@@ -41,7 +41,7 @@ kernel.shmall = 268435456
 # Keep at least 64MB of free RAM space available
 vm.min_free_kbytes = 65535 # (131070)128Mb
 
-### NETWORK
+### NETWORK ###
 
 # SYN attack
 net.ipv4.tcp_syncookies = 1
@@ -90,7 +90,7 @@ net.ipv4.ip_local_port_range = 32768 65535
 # Enable a fix for RFC1337 - time-wait assassination hazards in TCP
 net.ipv4.tcp_rfc1337 = 1
 
-### Network performance
+### NETWORK PERF. ###
 
 # Turn on the tcp_window_scaling
 net.ipv4.tcp_window_scaling = 1
