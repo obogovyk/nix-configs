@@ -8,24 +8,29 @@ socket=/var/lib/mysql/mysql.sock
 character-set-server=utf8
 collation-server=utf8_general_ci
 
+### General
 user=mysql
 pid-file=/var/run/mysqld/mysqld.pid
 socket=/var/lib/mysql/mysql.sock
-
 datadir=/var/lib/mysql
-tmpdir=/tmp
-
 bind-address=0.0.0.0
 port=3306
+tmpdir=/tmp
 skip-name-resolve
 
+max_connections=256
 wait_timeout=60
-max_connections=200
-#thread_cache_size=15
+max_allowed_packet = 128M
+thread_cache_size=16
 
-# Logs
+### Queries
+#query_cache_type=1
+query_cache_size=64M
+query_cache_limit=16M
+
+### Logs
 general_log_file=/var/log/mysql/mysql.log
-general_log=1
+general_log=0
 
 log-error=/var/log/mysql-error.log
 log_warnings=1
@@ -35,13 +40,9 @@ slow_query_log_file=/var/log/mysql/slow.log
 long_query_time = 5
 log-queries-not-using-indexes
 
-# InnoDB
+### InnoDB
 innodb_buffer_pool_size=536870912 # 512M
 innodb_file_per_table=1
-innodb_log_file_size=256M
+innodb_log_file_size=512M
+innodb_log_buffer_size = 32M
 innodb_flush_method=O_DIRECT
-
-# Queries
-#query_cache_type=1
-query_cache_size=64M
-query_cache_limit=8M
