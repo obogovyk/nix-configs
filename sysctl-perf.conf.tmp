@@ -105,7 +105,7 @@ net.ipv4.tcp_timestamps = 1
 # Don't ignore directed pings
 net.ipv4.icmp_echo_ignore_all = 0
 
-# Enable ignoring broadcasts request
+# Enable ignoring broadcasts request (smurf-atack)
 net.ipv4.icmp_echo_ignore_broadcasts = 1
 
 # Enable bad error message Protection
