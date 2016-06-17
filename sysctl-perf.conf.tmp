@@ -17,11 +17,15 @@ fs.suid_dumpable = 2
 # Hide exposed kernel pointers
 kernel.kptr_restrict = 1
 
+# Link restrictions prevent from attacks using guessable filenames
+fs.protected_hardlinks = 1
+fs.protected_symlinks = 1
+
 #
 ### MEMORY
 #
 
-# Configure oom_killer
+# Configure OOM killer
 vm.panic_on_oom = 0
 vm.overcommit_memory = 0
 vm.overcommit_ratio = 50
