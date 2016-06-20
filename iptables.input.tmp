@@ -15,6 +15,8 @@
 -A INPUT -i eth0 -p tcp --dport 443 -m connlimit --connlimit-above 32 -j DROP
 -A INPUT -i eth0 -p tcp --dport 22 -m connlimit --connlimit-above 2 -j DROP # --connlimit-mask 32/24
 -A INPUT -i eth0 -j REJECT --reject-with reject-with tcp-reset
+
+-A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu # For PPTP connections
 ---
 # BLACKLIST EXAMPLE
 -A BLACKLIST -s 218.xx.xx.xxx/32 -i eth0 -p tcp -m tcp --dport 22 -j REJECT --reject-with tcp-reset
