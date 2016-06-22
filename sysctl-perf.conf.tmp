@@ -30,7 +30,7 @@ vm.panic_on_oom = 0
 
 # Increase size of file handles and inode cache
 fs.file-max = 655350
-fs.file-nr = 72832	0	655350
+fs.file-nr = 72832 0 655350
 
 # Do less swapping
 vm.swappiness = 10
@@ -89,7 +89,7 @@ net.ipv4.conf.default.log_martians = 1
 net.ipv4.tcp_fin_timeout = 30
 
 # Decrease the time default value for connections to keep alive
-net.ipv4.tcp_keepalive_time = 300
+net.ipv4.tcp_keepalive_time = 180
 net.ipv4.tcp_keepalive_probes = 5
 net.ipv4.tcp_keepalive_intvl = 15
 
@@ -197,5 +197,5 @@ net.ipv4.route.flush = 1
 net.ipv6.route.flush = 1
 
 # Incrase conntrack connections limit
-net.netfilter.nf_conntrack_max = 131072
-net.nf_conntrack_max = 131072
+net.netfilter.nf_conntrack_max = 256000
+net.nf_conntrack_max = 256000
