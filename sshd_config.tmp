@@ -7,7 +7,8 @@ HostKey /etc/ssh/ssh_host_ed25519_key
 
 SyslogFacility AUTHPRIV
 
-LogLevel INFO
+LogLevel WARN
+#Banner /etc/ssh/sshd_banner
 PermitRootLogin no
 
 AuthorizedKeysFile .ssh/authorized_keys
