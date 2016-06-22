@@ -31,11 +31,11 @@ server {
     gzip_types       text/plain text/css text/js text/javascript application/javascript application/json;
 
     access_log /var/log/nginx/project/project.log main;
-    error_log  /var/log/nginx/project/project.log error;
+    error_log  /var/log/nginx/project/error.log error;
 
     charset utf-8;
-    clent_max_body_size 5m;
-    keepalive_timeout  70;
+    clent_max_body_size 8m;
+    keepalive_timeout  60;
 
     root /usr/share/nginx/html/project.com;
 
@@ -52,7 +52,7 @@ server {
         autoindex on;
         autoindex_format html;
 
-        limit_rate_after 10m;
+        limit_rate_after 32m;
         limit_rate 512k;
     }
 
