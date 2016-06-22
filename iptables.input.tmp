@@ -21,3 +21,11 @@
 # BLACKLIST EXAMPLE
 -A BLACKLIST -s 218.xx.xx.xxx/32 -i eth0 -p tcp -m tcp --dport 22 -j REJECT --reject-with tcp-reset
 -A BLACKLIST -j RETURN
+
+===
+-A CR-FILTER -p tcp -m conntrack --ctstate NEW -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -j DROP
+-A CR-FILTER -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j DROP
+-A CR-FILTER -p icmp -m limit --limit 20/sec --limit-burst 40 -j ACCEPT
+-A CR-FILTER -p tcp -m connlimit --connlimit-above 64 --connlimit-mask 32 --connlimit-saddr -j REJECT --reject-with tcp-reset
+-A CR-FILTER -j RETURN
+-A CR-NODEJS -p tcp -m multiport --dports 3031, 3032 -m comment --comment "App 1" -j ACCEPT
