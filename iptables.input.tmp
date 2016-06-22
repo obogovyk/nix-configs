@@ -11,7 +11,7 @@
 
 -A INPUT -i eth0 -p tcp -m conntrack --ctstate NEW -m multiport --dports 80,443 -j LOG --log-prefix "WebAcess: " --log-level 4
 -A INPUT -i eth0 -p tcp -m conntrack --ctstate NEW -m multiport --dports 80,443 -j ACCEPT
--A INPUT -i eth0 -p tcp --dport 80 -m connlimit --connlimit-above 32 -j DROP
+-A INPUT -i eth0 -p tcp --syn --dport 80 -m connlimit --connlimit-above 64 -j DROP
 -A INPUT -i eth0 -p tcp --dport 443 -m connlimit --connlimit-above 32 -j DROP
 -A INPUT -i eth0 -p tcp --dport 22 -m connlimit --connlimit-above 2 -j DROP # --connlimit-mask 32/24
 -A INPUT -i eth0 -j REJECT --reject-with reject-with tcp-reset
