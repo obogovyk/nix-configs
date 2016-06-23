@@ -75,7 +75,7 @@ server {
     }
     
     location ~ \.php$ {
-        root                    /usr/share/nginx/html/lana-spa.com.ua;
+        root                    /usr/share/nginx/html/project;
         try_files $uri =404;
         if (-f $request_filename) {
             fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock;
