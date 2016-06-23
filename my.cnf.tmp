@@ -8,7 +8,9 @@ socket=/var/lib/mysql/mysql.sock
 character-set-server=utf8
 collation-server=utf8_general_ci
 
+#
 ### General
+#
 user=mysql
 pid-file=/var/run/mysqld/mysqld.pid
 socket=/var/lib/mysql/mysql.sock
@@ -18,15 +20,18 @@ port=3306
 tmpdir=/tmp
 skip-name-resolve
 
-max_connections=256
-wait_timeout=60
+max_connections=768
+wait_timeout=30
 max_allowed_packet = 128M
 thread_cache_size=16
 
+#
 ### Queries
-#query_cache_type=1
-query_cache_size=64M
+#
+query_cache_type=1
+query_cache_size=128M
 query_cache_limit=16M
+
 
 ### Logs
 general_log_file=/var/log/mysql/mysql.log
