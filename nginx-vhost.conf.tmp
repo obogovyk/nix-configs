@@ -1,16 +1,14 @@
-
 upstream backend {
     ip_hash; 
     server backend1.example.com       max_fails=3;
-    server backend2.example.com:8080; max_fails=2;
-    server unix:/tmp/backend3;        max_fails=4 weight=3;
-    
+    server backend2.example.com:8080; max_fails=3;
+    server unix:/tmp/backend3;        max_fails=5 weight=3;
     keepalive 32;
 }
 
 server {
-    listen       172.31.0.0:80;
-    listen       172.31.0.0:443 ssl;
+    listen       172.31.0.200:80;
+    listen       172.31.0.200:443 ssl;
     server_name  project.com www.project.com;
 
     #if ($scheme = http) {
@@ -71,8 +69,14 @@ server {
     }
     
     location /balanced {
-        proxy_pass       http://backend;
+        proxy_pass http://backend;
     }
+    
+    location /aliased {
+        alias /var/www/html/anotherdir;
+        # php-fpm can be included inside this location
+    }
+
     
     location ~ \.php$ {
         root                    /usr/share/nginx/html/project;
