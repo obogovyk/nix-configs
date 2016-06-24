@@ -33,8 +33,7 @@ vm.overcommit_ratio = 50
 vm.overcommit_memory = 0
 
 # Increase size of file handles and inode cache
-fs.file-max = 256000
-fs.file-nr = 72832 0 256000
+fs.file-max = 65535
 
 # Do less swapping
 vm.swappiness = 10
