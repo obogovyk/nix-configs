@@ -33,7 +33,7 @@ vm.overcommit_ratio = 50
 vm.overcommit_memory = 0
 
 # Increase size of file handles and inode cache
-fs.file-max = 65535
+fs.file-max = 512000
 
 # Do less swapping
 vm.swappiness = 10
@@ -43,15 +43,16 @@ vm.dirty_background_ratio = 10
 # Specifies the minimum virtual address that a process is allowed to mmap
 vm.mmap_min_addr = 65536
 
-# Set maximum amount of memory allocated to shm to 256MB
-kernel.shmmax = 268435456
-kernel.shmall = 268435456
+# Set maximum amount of memory allocated to shm 4Gb (x32/x64)
+kernel.shmmni = 4096
+kernel.shmmax = 4294967295
+kernel.shmall = 4294967295
 
 # Keep at least 64MB of free RAM space available
 vm.min_free_kbytes = 65535 # (131070)128Mb
 
 #
-### NETWORK
+### NETWORK SEC.
 #
 
 # Protect from SYN attack
@@ -119,14 +120,14 @@ net.ipv4.tcp_rfc1337 = 1
 
 # For high-bandwidth low-latency networks, use 'htcp' congestion control
 # Do a 'modprobe tcp_htcp' first
-# net.ipv4.tcp_congestion_control = htcp
+#net.ipv4.tcp_congestion_control = htcp
 
 # Turn on the tcp_window_scaling
 net.ipv4.tcp_window_scaling = 1
 
 # Increase the read-buffer space allocatable
-net.ipv4.tcp_rmem = 8192 87380 16777216
-net.ipv4.udp_rmem_min = 16384
+#net.ipv4.tcp_rmem = 8192 87380 16777216
+#net.ipv4.udp_rmem_min = 16384
 net.core.rmem_default = 262144
 net.core.rmem_max = 16777216
 
@@ -155,7 +156,7 @@ net.ipv4.tcp_orphan_retries = 0
 net.ipv4.ipfrag_high_thresh = 512000
 net.ipv4.ipfrag_low_thresh = 446464
 
-# don't cache ssthresh from previous connection
+# Don't cache ssthresh from previous connection
 net.ipv4.tcp_no_metrics_save = 1
 net.ipv4.tcp_moderate_rcvbuf = 1
 
