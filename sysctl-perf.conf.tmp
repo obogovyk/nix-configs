@@ -43,7 +43,7 @@ vm.dirty_background_ratio = 10
 # Specifies the minimum virtual address that a process is allowed to mmap
 vm.mmap_min_addr = 65536
 
-# Set maximum amount of memory allocated to shm 4Gb (x32/x64)
+# Set maximum amount of memory allocated to Shared Memory (4Gb)
 kernel.shmmni = 4096
 kernel.shmmax = 4294967295
 kernel.shmall = 4294967295
