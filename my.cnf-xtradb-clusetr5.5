@@ -1,19 +1,26 @@
 # Testet on CentOS x86 6.7 (Final)
 
 [mysqld]
-# bind-address=192.168.122.49
+bind-address=192.168.122.49
 port=3306
 user=mysql
 datadir = /var/lib/mysql
-wsrep_provider=/usr/lib/libgalera_smm.so
-wsrep_cluster_address = gcomm://192.168.122.48,192.168.122.49,192.168.122.50
+
 binlog_format=ROW
 default_storage_engine=InnoDB
 innodb_autoinc_lock_mode=2
+
+wsrep_cluster_name=XTRA
+wsrep_cluster_address = gcomm://192.168.122.48,192.168.122.49,192.168.122.50
 wsrep_node_address=192.168.122.49
-# wsrep_sst_method=xtrabackup-v2
-wsrep_cluster_name=PXC
-wsrep_sst_auth="sstuser:58Ag$yT1*"
+wsrep_sst_method=xtrabackup-v2
+wsrep_slave_threads=4 #Default 1
+wsrep_provider=/usr/lib64/libgalera_smm.so # CentOS/RHEL
+#/usr/lib/libgalera_smm.so for Ubuntu/Debian
+wsrep_sst_auth="sstuser:UR1sjgGjiI8CTi5dZP2iXHOGzneZqhra3XzEb6Xpepo4EBHgA1uo"
+
+#wsrep_debug=ON #Default OFF
+#wsrep_provider_options="qcache.size=128M; qcs.fc_limit=128"
 
 ## Initialization
 # /etc/init.d/mysql bootstrap-pxc
