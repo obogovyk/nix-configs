@@ -14,20 +14,21 @@ wsrep_cluster_name=XTRA
 wsrep_cluster_address = gcomm://192.168.122.48,192.168.122.49,192.168.122.50
 wsrep_node_address=192.168.122.49
 wsrep_sst_method=xtrabackup-v2
-wsrep_slave_threads=4 #Default 1
-wsrep_provider=/usr/lib64/libgalera_smm.so # CentOS/RHEL
+wsrep_slave_threads=8
+wsrep_provider=/usr/lib64/libgalera_smm.so
 #/usr/lib/libgalera_smm.so for Ubuntu/Debian
-wsrep_sst_auth="sstuser:UR1sjgGjiI8CTi5dZP2iXHOGzneZqhra3XzEb6Xpepo4EBHgA1uo"
+wsrep_sst_auth="sstuser:UR1sjgGjiI8CTi5dZP2"
 
 #wsrep_debug=ON #Default OFF
-#wsrep_provider_options="qcache.size=128M; qcs.fc_limit=128"
+#wsrep_provider_options="gcache.size=128M; gcs.fc_limit=128"
 
 ## Initialization
 # /etc/init.d/mysql bootstrap-pxc
 # systemctl start mysql@bootstrap.service
 
 ## Add user for relication
-# mysql@percona1> UPDATE mysql.user SET password=PASSWORD("P@ssw0rd") where user='root';
+# mysql@percona1> GRANT 
+# mysql@percona1> UPDATE mysql.user SET password=PASSWORD("UR1sjgGjiI8CTi5dZP2") where user='sstuser';
 # mysql@percona1> FLUSH PRIVILEGES;
 
 ## mysql> SHOW GLOBAL STATUS like '%wsrep%';
