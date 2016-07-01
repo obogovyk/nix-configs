@@ -27,7 +27,6 @@ wsrep_sst_auth="sstuser:UR1sjgGjiI8CTi5dZP2"
 # systemctl start mysql@bootstrap.service
 
 ## Add user for relication
-# mysql@percona1> GRANT 
 # mysql@percona1> UPDATE mysql.user SET password=PASSWORD("UR1sjgGjiI8CTi5dZP2") where user='sstuser';
 # mysql@percona1> FLUSH PRIVILEGES;
 
