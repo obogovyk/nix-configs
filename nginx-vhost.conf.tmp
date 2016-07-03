@@ -3,7 +3,7 @@ upstream backend {
     server backend1.example.com       max_fails=3;
     server backend2.example.com:8080; max_fails=3;
     server unix:/tmp/backend3;        max_fails=5 weight=3;
-    keepalive 32;
+    keepalive 16;
 }
 
 server {
