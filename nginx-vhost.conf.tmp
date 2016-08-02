@@ -104,13 +104,14 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param QUERY_STRING    $query_string;
         fastcgi_param REQUEST_METHOD  $request_method;
+        include fastcgi_params;
+        
         fastcgi_buffers		          256 128k;
         fastcgi_connect_timeout       60s;
         fastcgi_send_timeout 	      60s;
         fastcgi_read_timeout 	      60s;
         fastcgi_cache_valid           200 302 10m;
         fastcgi_cache_valid 404       1m;
-        # include fastcgi_params;
     }
     
     error_page   404              /404.php;
