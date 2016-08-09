@@ -11,9 +11,7 @@ file_open_mode=0775
 anon_upload_enable=NO
 anon_mkdir_write_enable=NO
 dirmessage_enable=YES
-
 use_localtime=YES
-xferlog_enable=YES
 
 #connect_from_port_20=YES
 #chown_uploads=YES
@@ -26,6 +24,7 @@ log_ftp_protocol=YES
 vsftpd_log_file=/var/log/vsftpd.log
 
 data_connection_timeout=120
+
 #nopriv_user=ftpsecure
 #async_abor_enable=YES
 #ascii_upload_enable=YES
@@ -41,14 +40,14 @@ ftpd_banner=Welcome to private ftp-service.
 # (Warning! chroot'ing can be very dangerous. If using chroot, make sure that
 # the user does not have write access to the top level directory within the
 # chroot)
+
 chroot_local_user=YES
 allow_writeable_chroot=YES
 
 #chroot_list_enable=YES
 # (default follows)
 #chroot_list_file=/etc/vsftpd.chroot_list
-
-secure_chroot_dir=/var/run/vsftpd/empty
+#secure_chroot_dir=/var/run/vsftpd/empty
 
 ### PASSIVE MODE Configuration
 pasv_enable=YES
@@ -74,5 +73,5 @@ pasv_addr_resolve=YES
 #force_local_logins_ssl=YES
 
 # Certificate files
-#rsa_cert_file=/etc/pki/tls/certs/opensoft.com.pem
-#rsa_private_key_file=/etc/pki/tls/certs/private/opensoft.com.key
+#rsa_cert_file=/etc/pki/tls/certs/example.com.pem
+#rsa_private_key_file=/etc/pki/tls/certs/private/example.com.key
