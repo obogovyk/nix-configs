@@ -1,66 +1,64 @@
-# Example config file /etc/vsftpd/vsftpd.conf
-
+listen=YES
+listen_address=0.0.0.0
+listen_ipv6=NO
 anonymous_enable=NO
-anon_mkdir_write_enable=NO
 
 local_enable=YES
 write_enable=YES
+local_umask=002
+file_open_mode=0775
 
-local_umask=022
-
-dirlist_enable = YES
+anon_upload_enable=NO
+anon_mkdir_write_enable=NO
 dirmessage_enable=YES
 
-# Activate logging
+use_localtime=YES
+xferlog_enable=YES
+
+#connect_from_port_20=YES
+#chown_uploads=YES
+#chown_username=whoever
+
+### Logging
 xferlog_enable=YES
 xferlog_std_format=NO
 log_ftp_protocol=YES
 vsftpd_log_file=/var/log/vsftpd.log
 
-connect_from_port_20=YES
-
-# === Passive mode configuration (optional) ===
-#pasv_enable=YES
-#pasv_min_port=1024
-#pasv_max_port=1048
-#pasv_address=52.4.29.60
-
-# You may change the default value for timing out an idle session.
-#idle_session_timeout=600
-
-# You may change the default value for timing out a data connection.
-#data_connection_timeout=120
-
-# ASCII mangling is a horrible feature of the protocol.
+data_connection_timeout=120
+#nopriv_user=ftpsecure
+#async_abor_enable=YES
 #ascii_upload_enable=YES
 #ascii_download_enable=YES
 
-ftpd_banner=Welcome to OpenSoft FTP-server. All your activity is logged.
-#banned_email_file=/etc/vsftpd/banned_emails
+ftpd_banner=Welcome to private ftp-service.
+
+#banned_email_file=/etc/vsftpd.banned_emails
 
 # You may specify an explicit list of local users to chroot() to their home
-#directory. If chroot_local_user is YES, then this list becomes a list of
-#users to NOT chroot().
-#(Warning! chroot'ing can be very dangerous. If using chroot, make sure that
-#the user does not have write access to the top level directory within the
-#chroot)
-
+# directory. If chroot_local_user is YES, then this list becomes a list of
+# users to NOT chroot().
+# (Warning! chroot'ing can be very dangerous. If using chroot, make sure that
+# the user does not have write access to the top level directory within the
+# chroot)
 chroot_local_user=YES
 allow_writeable_chroot=YES
+
 #chroot_list_enable=YES
-#chroot_list_file=/etc/vsftpd/chroot_list
+# (default follows)
+#chroot_list_file=/etc/vsftpd.chroot_list
 
-listen=YES
-listen_address=0.0.0.0 #all addresses
+secure_chroot_dir=/var/run/vsftpd/empty
 
-#listen_ipv6=YES
+### PASSIVE MODE Configuration
+pasv_enable=YES
+pasv_min_port=12800
+pasv_max_port=13200
+port_enable=YES
+pasv_address=ec2-52-**-**-**.us-west-*.compute.amazonaws.com
+pasv_addr_resolve=YES
 
-pam_service_name=vsftpd
-userlist_enable=YES
-tcp_wrappers=YES
-
-# === SSL/TLS Configuration ===
-
+### SSL/TLS Configuration
 # chmod 600 /etc/pki/tls/certs/opensoft.com.pem
 # chown root:root /etc/pki/tls/certs/private/opensoft.com.key
 
