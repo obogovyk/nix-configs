@@ -1,17 +1,20 @@
 #!/bin/bash
 
+OS_NAME="centos6.8-min_x64"
+qemu-img create -f qcow2 -o preallocation=metadata /var/lib/libvirt/images/$OS_NAME.qcow2 12G
+
 virt-install \
---connect qemu:///system \
---virt-type kvm \
---name=ora-vmm-2.2 \
---metadata title="Oracle VM Manager 2.2 x86" \
---arch=i686 \
---memory=384,maxmemory=512 \
---disk path=/var/lib/libvirt/images/ora-vmm-2.2,size=8,sparse=false,cache=none,format=vmdk,bus=virtio \
---graphics spice \
---vcpus cores=1  \
---boot=cdrom \
---cdrom=/home/***/Downloads/ISO/CentOS-6.6-i386-minimal.iso \
+--name=$OS_NAME \
+--vcpus=2 --ram=2048 \
+--disk path=/var/lib/libvirt/images/$OS_NAME.qcow2,format=qcow2,cache=none,device=disk,bus=virtio \
+--disk path=/opt/iso/CentOS-6.8-x86_64-minimal.iso,device=cdrom \
+--cdrom=/opt/iso/CentOS-6.8-x86_64-minimal.iso \
 --network bridge=virbr0 \
 --os-type=linux \
---os-variant=centos6.5
+--os-variant=rhel6 \
+--vnc \
+--keymap=en-us \
+--hvm \
+--autostart
+
+virt-viewer -c qemu:///system $OS_NAME
