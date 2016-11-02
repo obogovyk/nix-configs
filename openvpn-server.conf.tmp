@@ -23,3 +23,25 @@ log openvpn.log
 log-append openvpn.log
 status openvpn-status.log
 verb 3
+
+=== other ===
+port 1194
+proto tcp
+dev tun
+ca ca.crt
+cert server.crt
+key server.key
+dh dh2048.pem
+server 172.16.1.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 8.8.8.8"
+push "dhcp-option DNS 8.8.4.4"
+duplicate-cn
+keepalive 20 60
+comp-lzo
+max-clients 50
+persist-key
+persist-tun
+log-append /var/log/openvpn.log
+verb 3
