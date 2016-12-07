@@ -1,28 +1,31 @@
-upstream jenkins {
-  server {{ ip }}:8080 fail_timeout=0;
+upstream backend {
+    ip_hash; 
+    server backend1.example.com       max_fails=3;
+    server backend2.example.com:8080; max_fails=3;
+    server unix:/tmp/backend3;        max_fails=5 weight=3;
+    keepalive 16;
 }
 
 server {
-
     charset utf-8;
-
+    
     listen       {{ ip }}:80;
     listen       {{ ip }}:443 ssl;
-    server_name  jenkins.{{ name }}.com;
+    server_name  project.com www.project.com;
 
-    if ($scheme = http) {
-       return 301 https://$server_name$request_uri;
-    }
-
-    ssl_certificate     /etc/nginx/ssl/jenkins/{{ cert }}.pem;
-    ssl_certificate_key /etc/nginx/ssl/jenkins/{{ key }}.pem;
-
+    #if ($scheme = http) {
+    #   return 301 https://$server_name$request_uri;
+    #}
+    
+    ssl_certificate     /etc/nginx/ssl/project_bundle.crt;
+    ssl_certificate_key /etc/nginx/ssl/project.key;
+    
     ssl_ciphers         HIGH:!aNULL:!MD5;
     ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
 
-    ssl_session_cache   shared:SSL:10m;
-    ssl_session_timeout 30m;
-
+    ssl_session_cache   shared:SSL:5m; # -> add to http directive
+    ssl_session_timeout 10m; # -> add to http directive
+    
     gzip             on;
     gzip_comp_level  4;
     gzip_min_length  1024;
@@ -30,44 +33,90 @@ server {
     gzip_types       text/plain text/css text/js text/javascript application/javascript application/json;
     gzip_buffers     16 8k;
 
-    access_log /var/log/nginx/jenkins_access.log main;
-    error_log  /var/log/nginx/jenkins_error.log error;
+    access_log /var/log/nginx/project/project.log main;
+    error_log  /var/log/nginx/project/error.log error;
 
-    error_page   500 502 503 504  /50x.php;
+    keepalive_timeout  60;
+    clent_max_body_size 32m;
+    
+    root /usr/share/nginx/html/project.com;
 
     location / {
+        index  index.php index.html index.htm index.shtml;
+    }
 
-        if ($http_user_agent ~ (libwww|wget|curl|LWP|damnBot|BBBike|java|spider|crawl) ) {
-            return 403;
-        }
+    location ~* ^.+\.(jpg|jpeg|gif|png|css|js)$ {
+        expires 30d;
+        access_log off;
+    }
 
-        proxy_pass       http://jenkins;
-        proxy_set_header Host $host;
+    location ^~ /public-rpm {
+        autoindex on;
+        autoindex_format html;
+        
+        limit_rate 512k;
+        limit_rate_after 32m;
+    }
+
+    location /admin {
+        allow 10.0.0.24/32;
+        deny all;
+        auth_basic "Authentication required.";
+        auth_basic_user_file conf/.htpasswd;
+    }
+    
+    location /proxied {
+        proxy_pass       http(s)://127.0.0.1:8080;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
-        client_max_body_size       72M;
-
-        proxy_connect_timeout      90s;
-        proxy_send_timeout         90s;
-        proxy_read_timeout         90s;
+        proxy_set_header Host $host;
+        
+        proxy_connect_timeout      60s;
+        proxy_send_timeout         60s;
+        proxy_read_timeout         60s;
 
         proxy_buffering on;
         proxy_buffer_size          8k;
-        proxy_buffers              8 32k;
-        proxy_busy_buffers_size    64k;
-        proxy_temp_file_write_size 64k;
+        proxy_buffers              8 8k;
+        proxy_busy_buffers_size    32k;
+        proxy_temp_file_write_size 32k;
+
+    }
+    
+    location /balanced {
+        proxy_pass http://backend;
+    }
+    
+    location /aliased {
+        alias /var/www/html/anotherdir;
+        # php-fpm can be included inside this location
     }
 
+    
+    location ~ \.php$ {
+        root                    /usr/share/nginx/html/project;
+        try_files $uri =404;
+        if (-f $request_filename) {
+            fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock;
+        }
+        include fastcgi_params;
+        fastcgi_index                 index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param QUERY_STRING    $query_string;
+        fastcgi_param REQUEST_METHOD  $request_method;
+        
+        fastcgi_buffers		          256 128k;
+        fastcgi_connect_timeout       60s;
+        fastcgi_send_timeout 	      60s;
+        fastcgi_read_timeout 	      60s;
+        fastcgi_cache_valid           200 302 10m;
+        fastcgi_cache_valid 404       1m;
+    }
+    
+    error_page   404              /404.php;
+    error_page   500 502 503 504  /50x.php;
+    
     location ~ /\.ht {
         deny all;
-    }
-
-    location ~ /.git {
-        deny all;
-    }
-
-    location ~ /.well-known {
-        allow all;
     }
 }
