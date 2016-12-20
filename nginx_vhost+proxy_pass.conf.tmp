@@ -1,8 +1,8 @@
 server {
     charset utf-8;
 
-    listen       172.31.1.100:80;
-    listen       172.31.1.100:443 ssl;
+    listen       {{ ip }}:80;
+    listen       {{ ip }}:443 ssl;
     server_name  example.com;
 
     if ($scheme = http) {
