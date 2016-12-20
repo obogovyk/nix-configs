@@ -37,6 +37,7 @@ server {
     }
 
     location ^~ /blog {
+    
         index index.php;
         try_files $uri $uri/ $uri/index.php?$args;
 
