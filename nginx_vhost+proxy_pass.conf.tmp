@@ -40,9 +40,9 @@ server {
     location ^~ /blog/ {
 #    location ^~ /blog { # // Plain permalink
 
-# //Post name permalink
         index index.php index.html index.htm;
 #        try_files $uri $uri/ $uri/index.php?$args; # //Plain permalink
+# //Post name permalink
         try_files $uri $uri/ /blog/index.php?$args;
       location ~ \.php$ {
         try_files $uri =404;
