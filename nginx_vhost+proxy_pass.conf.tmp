@@ -35,12 +35,15 @@ server {
     if ($http_user_agent ~ (libwww|wget|curl|LWP|damnBot|BBBike|spider|crawl) ) {
             return 403;
     }
-
-    location ^~ /blog {
     
-        index index.php;
-        try_files $uri $uri/ $uri/index.php?$args;
+# //Post name permalink
+    location ^~ /blog/ {
+#    location ^~ /blog { # // Plain permalink
 
+# //Post name permalink
+        index index.php index.html index.htm;
+#        try_files $uri $uri/ $uri/index.php?$args; # //Plain permalink
+        try_files $uri $uri/ /blog/index.php?$args;
       location ~ \.php$ {
         try_files $uri =404;
         if (-f $request_filename) {
@@ -54,7 +57,13 @@ server {
         fastcgi_param QUERY_STRING    $query_string;
         fastcgi_param REQUEST_METHOD  $request_method;
       }
+
+      location ~ ^/blog/(wp-admin|wp-login\.php) {
+        auth_basic "Authorization required";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        }
     }
+
 
     location ^~ / {
 
