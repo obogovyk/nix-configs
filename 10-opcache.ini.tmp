@@ -1,0 +1,11 @@
+zend_extension=opcache.so
+opcache.enable=1
+opcache.enable_cli=0
+opcache.memory_consumption=128
+opcache.interned_strings_buffer=8
+opcache.max_accelerated_files=2048
+opcache.max_wasted_percentage=10
+opcache.validate_timestamps=0
+opcache.revalidate_freq=300
+opcache.blacklist_filename=opcache-default.blacklist
+opcache.log_verbosity_level=1
