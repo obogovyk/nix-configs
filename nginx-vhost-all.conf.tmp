@@ -45,10 +45,12 @@ server {
         index  index.php index.html index.htm index.shtml;
     }
 
-    location ~* ^.+\.(jpg|jpeg|gif|png|css|js)$ {
+    location ~* \.(jpg|jpeg|gif|png|css|js)$ {
         expires 30d;
         access_log off;
+        log_not_found off;
     }
+
 
     location ^~ /public-rpm {
         autoindex on;
