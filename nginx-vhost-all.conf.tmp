@@ -20,11 +20,12 @@ server {
     ssl_certificate     /etc/nginx/ssl/project_bundle.crt;
     ssl_certificate_key /etc/nginx/ssl/project.key;
     
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers         HIGH:!aNULL:!MD5;
-    ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
 
-    ssl_session_cache   shared:SSL:5m; # -> add to http directive
-    ssl_session_timeout 10m; # -> add to http directive
+    ssl_session_cache   shared:SSL:5m;
+    ssl_session_timeout 10m;
     
     gzip             on;
     gzip_comp_level  4;
@@ -36,8 +37,7 @@ server {
     access_log /var/log/nginx/project/project.log main;
     error_log  /var/log/nginx/project/error.log error;
 
-    keepalive_timeout  60;
-    clent_max_body_size 32m;
+    clent_max_body_size 64m;
     
     root /usr/share/nginx/html/project.com;
 
@@ -116,7 +116,8 @@ server {
     error_page   404              /404.php;
     error_page   500 502 503 504  /50x.php;
     
-    location ~ /\.ht {
+    location ~ /\.(ht|svn|git) {
         deny all;
     }
+
 }
